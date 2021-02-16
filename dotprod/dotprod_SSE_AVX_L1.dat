@@ -1,0 +1,7 @@
+     dotprod_SSE_16B;   4.190 %; 23.367
+     dotprod_SSE_32B;   8.838 %; 44.223
+     dotprod_SSE_64B;   3.540 %; 46.239
+     dotprod_AVX_32B;   2.206 %; 51.699
+     dotprod_AVX_64B;   2.313 %; 91.321
+    dotprod_AVX_128B;   2.265 %; 85.426
+    dotprod_AVX_256B;   5.418 %; 91.001

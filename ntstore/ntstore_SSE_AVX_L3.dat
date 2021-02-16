@@ -1,0 +1,8 @@
+     ntstore_SSE_16B;   2.540 %; 16.174
+     ntstore_SSE_32B;   1.407 %; 16.185
+     ntstore_SSE_64B;   0.877 %; 16.245
+    ntstore_SSE_128B;   0.755 %; 16.269
+     ntstore_AVX_32B;   1.727 %; 16.396
+     ntstore_AVX_64B;   0.578 %; 16.432
+    ntstore_AVX_128B;   1.915 %; 16.385
+    ntstore_AVX_256B;   0.187 %; 16.446

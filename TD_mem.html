@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-01-23 Sat 13:19 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Measuring/Evaluating the performance of a computer system using benchmarks</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="yaspr" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Measuring/Evaluating the performance of a computer system using benchmarks</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgce8f2d4">1. Introduction</a></li>
+<li><a href="#org63f930b">2. Benchmarks/Microbenchmarks</a>
+<ul>
+<li><a href="#org737d868">2.1. load</a></li>
+<li><a href="#org33b050a">2.2. store</a></li>
+<li><a href="#org988081f">2.3. ntstore</a></li>
+<li><a href="#org1821b38">2.4. copy</a></li>
+<li><a href="#orgb8aad98">2.5. memcpy</a></li>
+<li><a href="#org2509282">2.6. pc (Random Pointer Chasing)</a></li>
+<li><a href="#org79350f5">2.7. reduc</a></li>
+<li><a href="#org0001e56">2.8. dotprod</a></li>
+<li><a href="#org4971255">2.9. triad</a></li>
+</ul>
+</li>
+<li><a href="#org673e647">3. Preparing the system before measurements</a>
+<ul>
+<li><a href="#orgeb1e112">3.1. Power</a></li>
+<li><a href="#orgcb3efbf">3.2. CPU/Core frequency</a></li>
+<li><a href="#org907bf28">3.3. Background services and system noise</a></li>
+<li><a href="#org9c88917">3.4. Process/thread pinning</a></li>
+</ul>
+</li>
+<li><a href="#org23e5783">4. Deliverables</a>
+<ul>
+<li><a href="#orgfc11ad6">4.1. System information</a></li>
+<li><a href="#org845104d">4.2. Report and data</a></li>
+</ul>
+</li>
+<li><a href="#org572ed58">5. References</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgce8f2d4" class="outline-2">
+<h2 id="orgce8f2d4"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The purpose of this lab is to run a number of <span class="underline">sequential</span> (single core or single process/thread) <b>benchmarks/kernels</b> and 
+<b>microbenchmarks</b> on a computer system running a <b>Linux</b> operating system in order to measure/evaluate the performance of the code patterns on a target system.
+</p>
+
+<p>
+The benchmarks provided are <b>memory bound</b> and some are meant to exhibit code patterns found in real applications.
+</p>
+
+<p>
+Most of the benchmarks are implemented in assembly using <b>SIMD</b> instructions (<b>SSE</b>, <b>AVX</b>, and <b>AVX512</b>)
+and are unrolled multiple times (<b>READ THE CODE!</b>). 
+</p>
+
+<p>
+When you're in doubt, always <b>RTFM</b>.
+</p>
+
+<p>
+<span class="underline">WARNING:</span> <b>DO NOT USE A LINUX VIRTUAL MACHINE OR ANY VIRTUALIZATION ENVIRONMENT (docker, &#x2026;). YOU MUST RUN THE BENCHMARKS ON A NATIVE LINUX INSTALLATION.</b>
+</p>
+
+<p>
+<span class="underline">WARNING:</span> <b>DO NOT COPY THE MEASUREMENT DATA OF YOUR CLASSMATES. ANY FRAUD OR PLAGIARISM WILL BE SEVERLY SANCTIONNED AND REPORTED.</b> 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org63f930b" class="outline-2">
+<h2 id="org63f930b"><span class="section-number-2">2</span> Benchmarks/Microbenchmarks</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org737d868" class="outline-3">
+<h3 id="org737d868"><span class="section-number-3">2.1</span> load</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+This benchmark performs memory loads. It is functionally useless and is only used to evaluate the performance
+(bandwidth and latency) of the memory subsystem (Caches and DRAM). 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org33b050a" class="outline-3">
+<h3 id="org33b050a"><span class="section-number-3">2.2</span> store</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+This benchmark performs memory stores in order to zero up a memory array. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org988081f" class="outline-3">
+<h3 id="org988081f"><span class="section-number-3">2.3</span> ntstore</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+This benchmark performs memory stores in order to zero up a memory array using <b>non-temporal</b> stores.
+<b>Non-temporal</b> stores are special memory instructions that bypass the CPU caches and write directly into <b>DRAM</b>. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1821b38" class="outline-3">
+<h3 id="org1821b38"><span class="section-number-3">2.4</span> copy</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+This benchmark copies a memory array into another memory array.
+</p>
+
+<p>
+Below is an example C code. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">copy</span>(<span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    a[i] = b[i];
+}
+
+</pre>
+</div>
+
+<p>
+<span class="underline">Note:</span> This benchmark is implemented in assembly and the C code is only provided for demonstrative purposes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb8aad98" class="outline-3">
+<h3 id="orgb8aad98"><span class="section-number-3">2.5</span> memcpy</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+This benchmark copies a memory array into another memory array using the <b>memcpy</b> primitive.
+</p>
+
+<p>
+The <b>memcpy</b> primitive implementation will depend on the compiler used to compile the benchmark. 
+</p>
+
+<p>
+If you use <b>GCC</b>, the <b>memcpy</b> function implementation will come from the <b>glibc</b> (<b>GNU C Library</b>) installed on your system. 
+</p>
+
+<p>
+If the <b>Intel Compiler</b> is used, the call to <b>memcpy</b> will be replaced by a call to <b><code>_intel_fast_memcpy</code></b>. 
+Here's an excerpt from the <b>Memory Movement and Initialization: Optimization and Control</b> article from <b>Intel</b>.
+</p>
+
+<pre class="example">
+
+Because these libc mem*() functions are so common, the Intel Compilers provide optimized versions of memset and memcpy in the Intel Compiler provided library 'libirc'.  
+This library and specifically these functions are intended to replace the calls to mem*() functions with a more optimized version of the mem*() functions.  
+The Intel replacement libraries have symbol names _intel_fast_memset and _intel_fast_memcpy. 
+
+</pre>
+
+<p>
+The <b>AMD Optimizing CPU Libraries</b> (<b>AOCL</b>) also provides optimized versions of <b>memcpy</b> for sizes greater than 1MB.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2509282" class="outline-3">
+<h3 id="org2509282"><span class="section-number-3">2.6</span> pc (Random Pointer Chasing)</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+This benchmark performs <b>random</b> pointer chasing in order to evaluate the <span class="underline"><b>real</b></span> latency of <b>DRAM</b> loads.
+The random accesses break the CPU prefetchers because the memory addresses are not predictable. This also helps avoid reusing memory which allows to bypass the caches.  
+All data accesses will then be serviced from <b>DRAM</b>.
+</p>
+
+<p>
+The main loop is written in assembly and accesses an array initialized and shuffled as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #b22222;">//</span><span style="color: #b22222;">This function initializes an array by writing the address of a location at the location  </span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">init</span>(<span style="color: #228b22;">void</span> **<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    a[i] = &amp;a[i];
+}
+
+<span style="color: #b22222;">//</span><span style="color: #b22222;">This function performs a shuffle on the given array with cacheline granularity </span>
+<span style="color: #b22222;">//</span><span style="color: #b22222;">On x86 architectures (Intel and AMD), a cacheline is 64B, or 8x8 bytes - each elements is 8 bytes (void * address).</span>
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">shuffle</span>(<span style="color: #228b22;">void</span> **<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #b22222;">//</span>
+  <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0;
+  <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">ii</span> = 0;
+  <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">nn</span> = n;
+
+  <span style="color: #b22222;">//</span>
+  <span style="color: #a020f0;">while</span> (i &lt; nn)
+    {
+      <span style="color: #b22222;">//</span><span style="color: #b22222;">Pick a random position between 0 and nn - 8</span>
+      ii = randxy(0, nn - 8);
+
+      <span style="color: #b22222;">//</span><span style="color: #b22222;">Make sure ii is divisible by 8</span>
+      ii -= (ii &amp; 7);
+
+      <span style="color: #b22222;">//</span><span style="color: #b22222;">Swap the ii cacheline with last cacheline</span>
+      <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">j</span> = 0; j &lt; CACHELINE_SIZE / <span style="color: #a020f0;">sizeof</span>(<span style="color: #228b22;">void</span> *); j++)
+        {
+          <span style="color: #228b22;">void</span> *<span style="color: #a0522d;">tmp</span> = a[j + nn - 8];
+
+          a[j + nn - 8] = a[j + ii];
+          a[j + ii] = tmp;
+        }
+
+      <span style="color: #b22222;">//</span><span style="color: #b22222;">Shrink the array</span>
+      nn -= 8;
+
+      <span style="color: #b22222;">//</span>
+      i += 8;
+    }
+}
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org79350f5" class="outline-3">
+<h3 id="org79350f5"><span class="section-number-3">2.7</span> reduc</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+This benchmark performs an array reduction.
+</p>
+
+<p>
+An example C code for array reduction.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">reduc</span>(<span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    r += a[i];
+}
+
+</pre>
+</div>
+
+<p>
+<span class="underline">Note:</span> This benchmark is implemented in assembly and the C code is only provided for demonstrative purposes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0001e56" class="outline-3">
+<h3 id="org0001e56"><span class="section-number-3">2.8</span> dotprod</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+This benchmark performs a <b>dot product</b> of two memory arrays.
+</p>
+
+<p>
+An example C code for a dot product.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">dotprod</span>(<span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    r += a[i] * b[i];
+}
+
+</pre>
+</div>
+
+<p>
+<span class="underline">Note:</span> This benchmark is implemented in assembly using the <b>FMA</b> (Fused-Multiply-Add) instruction, a.k.a. <b>MAC</b> (Multiply-Accumulate), and the C code is only provided for demonstrative purposes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4971255" class="outline-3">
+<h3 id="org4971255"><span class="section-number-3">2.9</span> triad</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+This benchmark performs a triad operation using three arrays: <b>a</b>, <b>b</b>, and <b>c</b>, and a scalar <b>d</b>.
+</p>
+
+<p>
+The code below shows the general pattern of a triad operation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">triad</span>(<span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">c</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">d</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    c[i] += a[i] + b[i] * d;
+}
+
+</pre>
+</div>
+
+<p>
+In our case, this pattern is changed to the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">
+<span style="color: #228b22;">void</span> <span style="color: #0000ff;">triad</span>(<span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">double</span> *<span style="color: #a020f0;">restrict</span> <span style="color: #a0522d;">c</span>, <span style="color: #228b22;">u64</span> <span style="color: #a0522d;">n</span>)
+{
+  <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">u64</span> <span style="color: #a0522d;">i</span> = 0; i &lt; n; i++)
+    c[i] += a[i] * b[i];
+}
+
+</pre>
+</div>
+
+<p>
+<span class="underline">Note:</span> This benchmark is also implemented in assembly using the <b>FMA</b> (Fused-Multiply-Add) operation and the C code is only provided for demonstrative purposes.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org673e647" class="outline-2">
+<h2 id="org673e647"><span class="section-number-2">3</span> Preparing the system before measurements</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+In order to perform <b>CLEAN</b> measurements and obtain valid values for the desired performance metrics, the system must be stable/consistent or <b>quiesced</b>.
+To ensure the consistency of measurements, certain constraints <b>MUST</b> be respected. Otherwise, the measurements will be noisy/unstable and therefore <b>WRONG</b> and <b>USELESS</b>. 
+</p>
+
+<p>
+The following sections cover the main constraints as well as how to ensure that they are satisfied.
+</p>
+</div>
+
+<div id="outline-container-orgeb1e112" class="outline-3">
+<h3 id="orgeb1e112"><span class="section-number-3">3.1</span> Power</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+If you are running the benchmarks on a laptop, make sure the device is connected to the power wall socket and <span class="underline">not running on battery</span>.
+Laptops come with power control units that can affect the overall performance of the target system in order to save power (Watts) and increase battery life.   
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb3efbf" class="outline-3">
+<h3 id="orgcb3efbf"><span class="section-number-3">3.2</span> CPU/Core frequency</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Modern CPUs also come with on-package power control units that perform frequency scaling (<b>DVFS</b> Dynamic Voltage and Frequency Scaling, or CPU throttling) in order to lower the power consumption of the 
+compute cores in certain cases: when running on battery, when the CPU or compute cores are idle, &#x2026;
+</p>
+
+<p>
+The Linux operating system deploys drivers that allow users to set the frequency mode of the underlying system. You can use the <b>cpupower</b> command in order to show and set the frequency of target cores.
+The following command shows the current frequency for cores 0, 2, and 4 on an <b>AMD Ryzen7 2700X CPU</b>:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ cpupower -c 0,2,4 frequency-info
+
+analyzing CPU 0:
+driver: acpi-cpufreq
+CPUs which run at the same hardware frequency: 0
+CPUs which need to have their frequency coordinated by software: 0
+maximum transition latency:  Cannot determine or is not supported.
+hardware limits: 2.20 GHz - 3.70 GHz
+available frequency steps:  3.70 GHz, 3.20 GHz, 2.20 GHz
+available cpufreq governors: userspace performance schedutil
+current policy: frequency should be within 2.20 GHz and 3.70 GHz.
+           The governor <span style="color: #8b2252;">"userspace"</span> may decide which speed to use
+           within this range.
+current CPU frequency: 3.70 GHz (asserted by call to hardware)
+boost state support:
+Supported: yes
+Active: yes
+Boost States: 0
+Total States: 3
+Pstate-P0:  3700MHz
+Pstate-P1:  3200MHz
+Pstate-P2:  2200MHz
+analyzing CPU 2:
+driver: acpi-cpufreq
+CPUs which run at the same hardware frequency: 2
+CPUs which need to have their frequency coordinated by software: 2
+maximum transition latency:  Cannot determine or is not supported.
+hardware limits: 2.20 GHz - 3.70 GHz
+available frequency steps:  3.70 GHz, 3.20 GHz, 2.20 GHz
+available cpufreq governors: userspace performance schedutil
+current policy: frequency should be within 2.20 GHz and 3.70 GHz.
+           The governor <span style="color: #8b2252;">"userspace"</span> may decide which speed to use
+           within this range.
+current CPU frequency: 3.70 GHz (asserted by call to hardware)
+boost state support:
+Supported: yes
+Active: yes
+Boost States: 0
+Total States: 3
+Pstate-P0:  3700MHz
+Pstate-P1:  3200MHz
+Pstate-P2:  2200MHz
+analyzing CPU 4:
+driver: acpi-cpufreq
+CPUs which run at the same hardware frequency: 4
+CPUs which need to have their frequency coordinated by software: 4
+maximum transition latency:  Cannot determine or is not supported.
+hardware limits: 2.20 GHz - 3.70 GHz
+available frequency steps:  3.70 GHz, 3.20 GHz, 2.20 GHz
+available cpufreq governors: userspace performance schedutil
+current policy: frequency should be within 2.20 GHz and 3.70 GHz.
+           The governor <span style="color: #8b2252;">"userspace"</span> may decide which speed to use
+           within this range.
+current CPU frequency: 3.70 GHz (asserted by call to hardware)
+boost state support:
+Supported: yes
+Active: yes
+Boost States: 0
+Total States: 3
+Pstate-P0:  3700MHz
+Pstate-P1:  3200MHz
+Pstate-P2:  2200MHz
+
+</pre>
+</div>
+
+<p>
+The <b>cpupower</b> command also provides all the valid frequency values and <b>governors</b>:
+</p>
+<pre class="example">
+
+hardware limits: 2.20 GHz - 3.70 GHz                                                                                                                                                                                                    
+available frequency steps:  3.70 GHz, 3.20 GHz, 2.20 GHz                                                                                                                                                                                
+available cpufreq governors: userspace performance schedutil                                                                                                                                                                            
+
+</pre>
+
+<p>
+In this case, the highest possible frequency is <b>3.7GHz</b> and the lowest is <b>2.2GHz</b>. The CPU cores can also run at <b>3.2GHz</b>. 
+</p>
+
+<p>
+We can also notice that multiple <b>governors</b> are available: <b>userspace</b>, <b>performance</b>, and <b>schedutil</b>. A governor is a mode 
+that allows the operating system to pick the frequency depending on certain constrains. The <b>userspace</b> governor allows the user
+to set the desired frequency according to the valid available values. The <b>performance</b> governor chooses the highest frequency value for
+maximum performanmce. For more details about the <b>schedutil</b> governor check out the first two links in the references section. 
+</p>
+
+<p>
+To set the frequency of core 12 (you can also use a range or a list as show above) to 3.2GHz, the following command can be used:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ cpupower -c 12 frequency-set -f 3.2GHz 
+
+</pre>
+</div>
+
+<p>
+For more details about the <b>cpupower</b> command <b>RTFM</b>: man cpupower.
+</p>
+
+<p>
+Before running the benchmarks, you have to make sure that the CPU frequency is constant during the whole run and for all benchmarks. This can be
+achieved by setting the frequency to the maximum available value (<b>userspace</b> governor). 
+</p>
+
+<p>
+<span class="underline">WARNING</span>: <b>DO NOT USE ANY OTHER GOVERNOR OTHER THAN userspace OR, ONLY IF USERSPACE IS NOT AVAILABLE, PERFORMANCE</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org907bf28" class="outline-3">
+<h3 id="org907bf28"><span class="section-number-3">3.3</span> Background services and system noise</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+In order to lower the amount of system noise, you must make sure that no background processes, or fewer, are running while the benchmarks are being measured.
+If a process is mapped to the same core as the benchmark, the operating system process scheduler will migrate the benchmark process into another core. This
+thread migration implies context switching (moving the process/thread CPU register values into another CPU core) and will induce a noticeable loss in performance.
+Therefore, you must not run any other application (Firefox, Chromium, &#x2026;) except for a terminal that will allow you to execute the benchmarks.  
+</p>
+
+<p>
+If you want to run the benchmarks in the most ideal conditions, you must not start the operating system <b>GUI</b> (GNOME, KDE, xfce, &#x2026;) and remain in console mode.
+Also, avoid running any operating system services (NetworkManager, DHCP daemon, web server, NTP daemon, &#x2026;).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9c88917" class="outline-3">
+<h3 id="org9c88917"><span class="section-number-3">3.4</span> Process/thread pinning</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+To avoid process/thread migration, you can pin the process or thread to a CPU core using the <b>taskset</b> command as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ taskset -c CORE_ID PROGRAM
+
+</pre>
+</div>
+
+<p>
+This command signals to the operating system that the program is to run on the target core (<code>CORE_ID</code>) and to not migrate or schedule the process.
+</p>
+
+<p>
+You can also use the <b>numactl</b> command to map processes/threads to CPU nodes and cores as well as on which memory nodes should the memory be allocated (<b>RTFM</b>).
+</p>
+
+<p>
+<span class="underline">WARNING:</span> <b>DO NOT PIN THREADS OR PROCESSES ON CORE 0. CORE 0 IS THE PREFERRED CORE FOR OPERATING SYSTEM TASKS.</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23e5783" class="outline-2">
+<h2 id="org23e5783"><span class="section-number-2">4</span> Deliverables</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgfc11ad6" class="outline-3">
+<h3 id="orgfc11ad6"><span class="section-number-3">4.1</span> System information</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+First, you have to provide information about the compiler, the <b>glibc</b> version, and <b>ALL</b> the details about the system (CPU, caches, and memory) you decided to run
+the benchmarks on. 
+</p>
+
+<p>
+If you use GCC or a variant of CLANG (AMD Optimizing C/C++ Compiler or Intel OneAPI), the following commands can be used to determine the compiler version:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ gcc --version
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Original clang</span>
+$ clang --version
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">AMD clang</span>
+$ aocc --version
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Intel OneAPI clang</span>
+$ icx --version
+$ icc --version
+
+</pre>
+</div>
+
+<p>
+To obtain the <b>glibc</b> version, use the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ ldd --version
+
+</pre>
+</div>
+
+<p>
+For the CPU information, create a directory named <b>system</b> that contains three sub-directories <b>cpu</b>, <b>caches</b>, and <b>memory</b> populated as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Creating ditectories</span>
+$ mkdir system system/cpu system/caches system/memory
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Gathering all hardware information</span>
+$ dmidecode &gt; system/hw.txt
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Populating the cpu directory</span>
+$ cat /proc/cpuinfo &gt; system/cpu/info.txt
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Populating the caches directory</span>
+$ cat /sys/devices/system/cpu/cpu*/cache/index*/* &gt; caches/all.txt
+
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Populating the memory directory</span>
+$ cat /proc/meminfo &gt; memory/info.txt
+
+</pre>
+</div>
+
+<p>
+If you wish, you can add the output of other tools such as <b>numactl -H</b>, <b>likwid-topology</b>, or <b>lstopo</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org845104d" class="outline-3">
+<h3 id="org845104d"><span class="section-number-3">4.2</span> Report and data</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+You have to provide a report (preferably <b>org-mode</b> or <b>PDF</b>) that contains histogram plots covering the bandwidth/latency for each variant of each benchmark.
+</p>
+
+<p>
+You must also provide the raw data files as well as the <b>Bash</b> and <b>GNUPlot</b> scripts used to generate the presented plots. Providing all the information
+is key to ensure the <span class="underline">reproducibility</span> of the performance measurement experiments.
+</p>
+
+<p>
+To generate a file with the bandwidth measurements for each variant of a benchmark, you can use the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+<span style="color: #b22222;">#</span><span style="color: #b22222;">Running the load benchmark on 24KiB of memory (fits in L1 cache) with a kernel repetition value of 1000 to stabilize the runs</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">The cut command selects column 1 (variant name) and 9 (bandwidth value) using the ';' as separator </span>
+$ taskset -c CORE_ID ./load_SSE_AVX $(( 24 * 2**10 )) 1000 | cut -d<span style="color: #8b2252;">';'</span> -f1,9 &gt; load_L1.dat  
+
+</pre>
+</div>
+
+<p>
+A <b>GNUPlot</b> script is provided as an example for plot generation. In order to run the script, you can use the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">
+$ gnuplot -c <span style="color: #8b2252;">"plot_bw.gp"</span> &gt; load_bw.png
+
+</pre>
+</div>
+
+
+<div id="org1f9cd7a" class="figure">
+<p><img src="./load_bw.png" alt="load_bw.png" width="1500px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Load benchmark on an AMD Ryzen7 2700X</p>
+</div>
+
+<p>
+<span class="underline">WARNING:</span> <b>YOU MUST MAKE SURE THE STANDARD DEVIATION IS BELOW 7%. OTHERWISE, THE MEASUREMENTS WILL BE CONSIDERED WRONG.</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org572ed58" class="outline-2">
+<h2 id="org572ed58"><span class="section-number-2">5</span> References</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li><a href="https://lwn.net/Articles/682391/">https://lwn.net/Articles/682391/</a></li>
+<li><a href="https://lkml.org/lkml/2016/3/17/420">https://lkml.org/lkml/2016/3/17/420</a></li>
+<li><a href="https://developer.amd.com/amd-aocl/">https://developer.amd.com/amd-aocl/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dynamic_frequency_scaling">https://en.wikipedia.org/wiki/Dynamic_frequency_scaling</a></li>
+<li><a href="https://software.intel.com/content/www/us/en/develop/articles/memcpy-memset-optimization-and-control.html">https://software.intel.com/content/www/us/en/develop/articles/memcpy-memset-optimization-and-control.html</a></li>
+<li><a href="https://www.youtube.com/watch?v=LvX3g45ynu8">https://www.youtube.com/watch?v=LvX3g45ynu8</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: yaspr</p>
+<p class="date">Created: 2021-01-23 Sat 13:19</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
